@@ -1,5 +1,5 @@
 classes_name =  ["aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
-classes_no = [i for i in xrange(len(classes_name))]
+classes_no = [i for i in range(len(classes_name))]
 classes_dict = dict(zip(classes_name, classes_no))
 num_class = len(classes_name)
 

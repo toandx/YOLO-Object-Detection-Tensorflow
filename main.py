@@ -17,13 +17,13 @@ boundary2 = boundary1 + settings.cell_size * settings.cell_size * settings.box_p
 
 try:
     saver.restore(sess, os.getcwd() + '/model.ckpt')
-    print 'load from past checkpoint'
+    print('load from past checkpoint')
 except:     
     try:
         saver.restore(sess, os.getcwd() + '/YOLO_small.ckpt')
-        print 'load from YOLO small pretrained'
+        print('load from YOLO small pretrained')
     except:
-        print 'you must train first, exiting..'
+        print('you must train first, exiting..')
         exit(0)
 
 def draw_result(img, result):
@@ -34,7 +34,7 @@ def draw_result(img, result):
         h = int(result[i][4] / 2)
         cv2.rectangle(img, (x - w, y - h), (x + w, y + h), (0, 255, 0), 2)
         cv2.rectangle(img, (x - w, y - h - 20), (x + w, y - h), (125, 125, 125), -1)
-        cv2.putText(img, result[i][0] + ' : %.2f' % result[i][5], (x - w + 5, y - h - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.CV_AA)
+        cv2.putText(img, result[i][0] + ' : %.2f' % result[i][5], (x - w + 5, y - h - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
         
 def detect(img):
     img_h, img_w, _ = img.shape
@@ -43,7 +43,7 @@ def detect(img):
     inputs = (inputs / 255.0) * 2.0 - 1.0
     inputs = np.reshape(inputs, (1, settings.image_size, settings.image_size, 3))
     result = detect_from_cvmat(inputs)[0]
-    print result
+    print(result)
 
     for i in range(len(result)):
         result[i][1] *= (1.0 * img_w / settings.image_size)
@@ -51,7 +51,7 @@ def detect(img):
         result[i][3] *= (1.0 * img_w / settings.image_size)
         result[i][4] *= (1.0 * img_h / settings.image_size)
 
-    return result
+    return(result)
 
 def detect_from_cvmat(inputs):
     net_output = sess.run(model.logits, feed_dict = {model.images: inputs})
@@ -129,8 +129,8 @@ if settings.output == 1:
     
 if settings.output == 2:
     labels = VOC('test').load_labels()
-    for i in xrange(len(labels)):
-        print labels[i]['imname']
+    for i in range(len(labels)):
+        print(labels[i]['imname'])
         image = cv2.imread(labels[i]['imname'])
         read_image(image, labels[i]['imname'][-10:])
 
